@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartOP - Online OP Token System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f7ff;
+            color: #222;
+        }
+
+        header {
+            background: #1565c0;
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 25px auto;
+            padding: 20px;
+        }
+
+        .emergency {
+            background: #fff0f0;
+            border: 2px solid #e53935;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .emergency h3 {
+            color: #d32f2f;
+            margin-bottom: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #1565c0;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        button:active {
+            background: #0d47a1;
+        }
+
+        #tokenResult {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e9;
+            border: 2px solid #43a047;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        #tokenNumber {
+            font-size: 35px;
+            color: #2e7d32;
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏥 SmartOP</h1>
+    <p>Online OP Token & Queue Management System</p>
+</header>
+
+<div class="container">
+
+    <div class="emergency">
+        <h3>🚨 Emergency Notice</h3>
+        <p>
+            If this is a medical emergency, please go directly to
+            the Emergency/Casualty Department. Do not wait for an OP token.
+        </p>
+    </div>
+
+    <div class="card">
+
+        <h2>Get Your OP Token</h2>
+
+        <form id="opForm">
+
+            <label for="name">Patient Name</label>
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter patient name"
+                required
+            >
+
+            <label for="phone">Mobile Number</label>
+            <input
+                type="tel"
+                id="phone"
+                placeholder="Enter mobile number"
+                maxlength="10"
+                required
+            >
+
+            <label for="department">Select Department</label>
+
+            <select id="department" required>
+                <option value="">-- Select Department --</option>
+                <option>General Medicine</option>
+                <option>Cardiology</option>
+                <option>ENT</option>
+                <option>Orthopedics</option>
+                <option>Dermatology</option>
+                <option>Pediatrics</option>
+                <option>Gynecology</option>
+            </select>
+
+            <label for="date">Visit Date</label>
+            <input type="date" id="date" required>
+
+            <button type="submit">
+                🎟️ Get OP Token
+            </button>
+
+        </form>
+
+        <div id="tokenResult">
+
+            <h3>Token Generated Successfully!</h3>
+
+            <div id="tokenNumber">
+                OP-001
+            </div>
+
+            <p id="patientDetails"></p>
+
+            <p>
+                Please reach the hospital before your token is called.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    SmartOP — Student Project Prototype
+</footer>
+
+
+<script>
+
+    let tokenCounter = 1;
+
+    document.getElementById("opForm").addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const department = document.getElementById("department").value;
+        const date = document.getElementById("date").value;
+
+        const token = "OP-" + String(tokenCounter).padStart(3, "0");
+
+        document.getElementById("tokenNumber").textContent = token;
+
+        document.getElementById("patientDetails").innerHTML =
+            "<strong>Patient:</strong> " + name +
+            "<br><strong>Department:</strong> " + department +
+            "<br><strong>Date:</strong> " + date;
+
+        document.getElementById("tokenResult").style.display = "block";
+
+        tokenCounter++;
+
+        document.getElementById("tokenResult").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
